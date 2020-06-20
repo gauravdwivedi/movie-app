@@ -29,6 +29,23 @@ class App extends React.Component {
     console.log("STATE", this.props.store.getState());
   }
 
+  isMovieFavourite = (movie) => {
+    const { favourites } = this.props.store.getState();
+
+    const index = favourites.indexOf(movie);
+    if (index === -1) {
+      //found the movie
+      return true
+    }
+
+
+    return false;
+  }
+
+
+
+
+
   render() {
     const { list } = this.props.store.getState();
 
@@ -40,7 +57,7 @@ class App extends React.Component {
         <div className="main" >
           <div className="tabs" >
             < div className="tab" > Movies </div>
-            <div className="tab" > Favourites </div>
+            <div className="tab"  > Favourites </div>
           </div >
 
           <div className="list" >
@@ -49,6 +66,10 @@ class App extends React.Component {
               key={
                 `movies-${index}`
               }
+
+              dispatch={this.props.store.dispatch}
+
+              isFav={this.isMovieFavourite(movie)}
             />
             ))
             } </div>
