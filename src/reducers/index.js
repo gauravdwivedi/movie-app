@@ -1,5 +1,5 @@
 
-import { ADD_MOVIES, ADD_FAVOURITES, REMOVE_FROM_FAVOURITES, SET_SHOW_FAVOURITES } from '../actions/index';
+import { ADD_MOVIES, ADD_FAVOURITES, REMOVE_FROM_FAVOURITES, SET_SHOW_FAVOURITES, ADD_SEARCH_RESULT, ADD_MOVIE_TO_LIST } from '../actions/index';
 const initialMovieState = {
 
   list: [],
@@ -8,7 +8,7 @@ const initialMovieState = {
 
 }
 
-export default function movies(state = initialMovieState, action) {
+export function movies(state = initialMovieState, action) {
   // if (action.type === ADD_MOVIES) {
   //   return {
   //     ...state,
@@ -50,6 +50,11 @@ export default function movies(state = initialMovieState, action) {
         ...state,
         showFavourite: action.val
       }
+    case ADD_MOVIE_TO_LIST:
+      return {
+        ...state,
+        list: [action.movie, ...state.list]
+      };
 
 
     default:
@@ -59,4 +64,42 @@ export default function movies(state = initialMovieState, action) {
 }
 
 
-// const ADD_MOVIES = 'ADD_MOVIES';
+const initialSearchState = {
+  result: {},
+  showSearchResults: false
+}
+
+export function search(state = initialSearchState, action) {
+
+
+  switch (action.type) {
+    case ADD_SEARCH_RESULT:
+      return {
+        ...state,
+        result: action.movie,
+        showSearchResults: true
+      }
+    case ADD_MOVIE_TO_LIST:
+      return {
+        ...state,
+        showSearchResults: false
+      };
+    default:
+      return state;
+  }
+}
+
+
+const initialRootState = {
+  movies: initialMovieState,
+  search: initialSearchState
+}
+
+export default function rootReducer(state = initialRootState, action) {
+  return {
+    movies: movies(state.movies, action),
+    search: search(state.search, action)
+  }
+}
+
+

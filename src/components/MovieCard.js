@@ -18,7 +18,7 @@ class MovieCard extends React.Component {
 
   render() {
     const { movie, isFav } = this.props;
-    console.log(movie.Poster);
+    // console.log(movie.Poster);
     return (
       <div className="movie-card">
         <div className="left">
